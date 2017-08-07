@@ -34,7 +34,7 @@ class TweetListView(ListView):
 
 
 
-
+'''
 
 
 def tweet_detail_view(request,pk=None):
@@ -46,7 +46,7 @@ def tweet_detail_view(request,pk=None):
     }
     return render(request, "tweets/detail_view.html",context)
 
-'''
+
 def tweet_list_view(request):
     queryset = Tweet.objects.all()
     for obj in queryset:

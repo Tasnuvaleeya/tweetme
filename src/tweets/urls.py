@@ -1,7 +1,7 @@
 # from django.contrib import admin
 from django.conf.urls import url
 # from .views import tweet_list_view,tweet_detail_view
-from .views import TweetDetailView, TweetListView,tweet_detail_view
+from .views import TweetDetailView, TweetListView
 
 urlpatterns = [
     # url(r'^$', tweet_list_view, name='list'),
