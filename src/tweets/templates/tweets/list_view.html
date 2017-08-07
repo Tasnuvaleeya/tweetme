@@ -1,3 +1,8 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+
 {% for obj in object_list %}<br/>
     <p>{{ obj.content }}<br/>
     {{ obj.user }}<br/>
@@ -5,3 +10,5 @@
         {{ obj.timestamp|timesince }} ago </p><br/><br/>
 
 {% endfor %}
+
+{% endblock content %}

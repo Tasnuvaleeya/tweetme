@@ -1,3 +1,9 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+    {% endblock content %}
+
 {% include "tweets/search_form.html" %}<br/>
 
 {% for obj in object_list %}<br/>
@@ -14,3 +20,5 @@
     {% endif %}
 
 {% endfor %}
+
+{% endblock content %}
