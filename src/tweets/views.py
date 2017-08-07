@@ -1,24 +1,37 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render,get_object_or_404
 from .models import Tweet
-from django.views.generic import DetailView, ListView,CreateView
+from django.views.generic import (DetailView,
+                                  ListView,
+                                  CreateView,
+                                  UpdateView,
+                                  DeleteView)
+from django.urls import reverse_lazy
 from .forms import TweetModelForm
+from .mixins import FormUserNeededMixin,UserOwnerMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
-class TweetCreateView(CreateView):
-    # queryset = Tweet.objects.all()
+
+class TweetCreateView(FormUserNeededMixin,CreateView):
     form_class =TweetModelForm
-    # fields = ['user','content']
     template_name = "tweets/create_view.html"
     success_url = "/tweet/create/"
+    # login_url = "/admin/"
+
+class TweetUpdateView(LoginRequiredMixin,UserOwnerMixin,UpdateView):
+    queryset = Tweet.objects.all()
+    form_class= TweetModelForm
+    template_name = "tweets/update_view.html"
+    success_url = "/tweet/"
 
 
-    def form_valid(self, form):
-        form.instance.user =self.request.user
-        return super(TweetCreateView,self).form_valid(form)
 
-
-
+class TweetDeleteView(LoginRequiredMixin,DeleteView):
+    # queryset = Tweet.objects.all()
+    model = Tweet
+    template_name = "tweets/delete_confirm.html"
+    success_url = reverse_lazy("home")
 
 
 
@@ -46,6 +59,19 @@ class TweetListView(ListView):
         # print(context)
         return context
 
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 def tweet_create_view(request):
     form = TweetModelForm(request.POST or None)
     if form.is_valid():
@@ -60,10 +86,6 @@ def tweet_create_view(request):
 
 
 
-
-
-
-'''
 def tweet_detail_view(request,pk=None):
     # obj = Tweet.objects.get(pk=pk)
     obj = get_object_or_404(Tweet,pk=pk)
