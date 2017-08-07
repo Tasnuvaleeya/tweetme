@@ -3,6 +3,15 @@ from .models import Tweet
 
 
 class TweetModelForm(forms.ModelForm):
+    content = forms.CharField(
+        label='',
+        widget=forms.Textarea(
+            attrs={
+                "placeholeder": "Your Message",
+                "class": "form-control"
+            }
+        )
+    )
     class Meta:
         model=Tweet
         fields =[
@@ -11,8 +20,8 @@ class TweetModelForm(forms.ModelForm):
 
         ]
 
-    def clean_content(self, *args,**kwargs):
-        content = self.cleaned_data.get('content')
-        if content == 'abc':
-            raise forms.ValidationError("Can not be ABC")
-        return content
+    # def clean_content(self, *args,**kwargs):
+    #     content = self.cleaned_data.get('content')
+    #     if content == 'abc':
+    #         raise forms.ValidationError("Can not be ABC")
+    #     # return content
