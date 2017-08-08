@@ -4,6 +4,8 @@
 
 {% block script %}
     <script>
+
+
         function getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
@@ -15,7 +17,6 @@
         }
 
         $(document).ready(function () {
-            console.log("working");
             var query=getParameterByName('q');
             var tweetList=[];
             function parseTweets() {
@@ -37,8 +38,12 @@
 
                 }
             }
-            $.ajax({
-                    {#                        url:'{% url 'tweet-api:list' %}',#}
+
+
+
+            function fetchTweets() {
+                console.log('fetching...');
+                            $.ajax({
                     url:'/api/tweet/',
                     'data':{
                         "q":query
@@ -53,12 +58,42 @@
                     error:function (data) {
                         console.log("error calling ajax");
                         console.log(data);
-
                     }
 
-                })
+                });
+            }
+            fetchTweets();
+            $('#tweet-form').submit(function(event) {
+                event.preventDefault();
+                var this_=$(this);
+
+{#                console.log(event);#}
+{#                console.log(this_.serialize())#}
+                var formData=this_.serialize()
+                $.ajax({
+                    url:'/api/tweet/create/',
+                    data:formData,
+                    method: 'POST',
+
+                    success: function (data) {
+                        {#                            console.log(data);#}
+                        tweetList =data;
+                        fetchTweets();
+
+                    },
+                    error:function (data) {
+                        console.log("error calling ajax");
+                        console.log(data.statusText);
+                        console.log(data.status);
+                    }
+
+                });
+
+            })
 
         });
+
+
     </script>
 
 {% endblock script %}
@@ -81,7 +116,7 @@
 
             {% if not request.GET.q %}
                 <div class="">
-                    {% include "tweets/form.html" with form=create_form action_url=create_url btn_title='Tweet' %}
+                    {% include "tweets/form.html" with form=create_form action_url=create_url btn_title='Tweet' form_id='tweet-form' %}
                 </div>
             {% endif %}
 
