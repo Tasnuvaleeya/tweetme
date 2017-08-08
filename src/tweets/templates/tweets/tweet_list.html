@@ -19,6 +19,22 @@
         $(document).ready(function () {
             var query=getParameterByName('q');
             var tweetList=[];
+            
+            function attachTweet(tweetValue,prepend) {
+                        var tweetUser = tweetValue.user;
+                        var tweetContent = tweetValue.content;
+                        var dateDisplay = tweetValue.date_display;
+                        var tweetFormattedHtml ="<div class=\"media\"><div class=\"media-body\">" + tweetContent + "<br/> via " +
+                            tweetUser.username + " | "+ dateDisplay+" |"+ " | " + "<a href='#'>View</a>" +
+
+                            "</div></div><hr/>"
+
+                        if (prepend==true){
+                            $('#tweet-cotainer').prepend(tweetFormattedHtml)
+                        }else{
+                        $('#tweet-cotainer').append(tweetFormattedHtml)
+                        }
+            }
             function parseTweets() {
                 if(tweetList==0){
                     $("#tweet-cotainer").text("No Tweets Found")
@@ -27,15 +43,9 @@
 
                     $.each(tweetList, function (key, value) {
                         var tweetKey = key;
-                        var tweetUser = value.user;
-                        var tweetContent = value.content;
-                        var dateDisplay = value.date_display
-                        $('#tweet-cotainer').append(
-                            "<div class=\"media\"><div class=\"media-body\">" + tweetContent + "<br/> via " +
-                            tweetUser.username + " | "+ dateDisplay+" |"+ " | " + "<a href='#'>View</a>" +
+                        attachTweet(value)
 
-                            "</div></div><hr/>"
-                        )
+
                     })
 
                 }
@@ -79,8 +89,10 @@
                     method: 'POST',
 
                     success: function (data) {
-                        tweetList =data;
-                        fetchTweets();
+{#                        tweetList =data;#}
+{#                        fetchTweets();#}
+                        this_.find("input[type=text],textarea").val("")
+                        attachTweet(data,true)
 
                     },
                     error:function (data) {
