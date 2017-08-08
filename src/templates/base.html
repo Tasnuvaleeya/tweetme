@@ -27,6 +27,34 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
    {% block script %} {% endblock script %}
+   <script>
+       $(document).ready(function () {
+            var typingTimer;
+            var doneInterval=500;
+            var searchInput=$('#navbar-search-form input[type=text]');
+            var searchQuery;
+
+           searchInput.keyup(function (event) {
+{#               console.log(event.key)#}
+               searchQuery= $(this).val();
+               clearTimeout(typingTimer);
+               typingTimer=setTimeout(doneSearchTyping, doneInterval)
+           })
+
+            searchInput.keydown(function (event) {
+                console.log(event.key)
+                clearTimeout(typingTimer)
+           })
+            function doneSearchTyping() {
+               if(searchQuery){
+                   //do search
+                   var url ='/tweet/search/?q='+searchQuery;
+                   document.location.href =url;
+               }
+                
+            }
+       })
+   </script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
   </body>
 </html>
