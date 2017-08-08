@@ -3,7 +3,7 @@ from .models import Tweet
 
 
 class TweetModelForm(forms.ModelForm):
-    
+
     content = forms.CharField(
         label='',
         widget=forms.Textarea(
