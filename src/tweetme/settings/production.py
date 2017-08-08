@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crspy_forms',
     'rest_framework',
+    'accoutns',
     'tweets',
 ]
 
