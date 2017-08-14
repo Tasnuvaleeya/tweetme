@@ -5,7 +5,6 @@ from .views import TweetDetailView, TweetListView,TweetCreateView,TweetUpdateVie
 from django.views.generic.base import RedirectView
 
 
-
 urlpatterns = [
     url(r'^$',RedirectView.as_view(url="/")),
     url(r'^search/$',TweetListView.as_view(),name='list'),

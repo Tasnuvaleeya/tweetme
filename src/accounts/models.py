@@ -3,6 +3,7 @@ from django.conf import settings
 
 # Create your models here.
 
+
 class UserProfileManager(models.Manager):
     def all(self):
         qs = self.get_queryset().all()
