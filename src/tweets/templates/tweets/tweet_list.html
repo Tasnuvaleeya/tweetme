@@ -27,7 +27,7 @@
                 var dateDisplay = tweetValue.date_display;
                 var tweetFormattedHtml ="<div class=\"media\"><div class=\"media-body\">" + tweetContent +
                     "<br/> via <a href='" +tweetUser.url+ "'>"+ tweetUser.username + "</a>"+
-                    " | "+ dateDisplay+" |"+ " | " + "<a href='#'>View</a>" +
+                    " | "+ dateDisplay + " | " + "<a href='#'>View</a>" +
                     "</div></div><hr/>"
                 if (prepend==true){
                     $('#tweet-cotainer').prepend(tweetFormattedHtml)
