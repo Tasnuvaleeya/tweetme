@@ -1,7 +1,7 @@
 from django.db import models
-
 from tweets.models import Tweet
 from django.urls import reverse_lazy
+
 
 class HashTag(models.Model):
     tag = models.CharField(max_length=120)
@@ -9,6 +9,7 @@ class HashTag(models.Model):
 
     def __str__(self):
         return self.tag
+
     def get_absolute_url(self):
         return reverse_lazy("hashtag", kwargs={"hashtag":self.tag})
 

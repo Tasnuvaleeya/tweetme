@@ -33,9 +33,11 @@
                 var tweetUser = tweetValue.user;
                 var tweetContent = tweetValue.content;
                 var dateDisplay = tweetValue.date_display;
-                var tweetFormattedHtml ="<div class=\"media\"><div class=\"media-body\">" + tweetContent +
+                var isRetweet = tweetValue.is_retweet;
+
+                var tweetFormattedHtml ="<div class=\"media\">"+ isRetweet + "<div class=\"media-body\">" + tweetContent +
                     "<br/> via <a href='" +tweetUser.url+ "'>"+ tweetUser.username + "</a>"+
-                    " | "+ dateDisplay + " | " + "<a href='#'>View</a>" +
+                    " | "+ dateDisplay + " | " + "<a href='/tweet/" + tweetValue.id + "'>View</a>" +
                     "</div></div><hr/>"
                 if (prepend==true){
                     $('#tweet-cotainer').prepend(tweetFormattedHtml)
