@@ -16,10 +16,29 @@
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
 
-        $(document).ready(function () {
+        $(document).ready(function (e){
             var query=getParameterByName('q');
             var tweetList=[];
             var nextTweetURL;
+            $(document.body).on("click", ".retweetBtn", (function (e){
+                e.preventDefault()
+                console.log("clicked")
+                var url = "/api" + $(this).attr("href")
+                $.ajax({
+                    method:"GET",
+                    url : url,
+                    success: function (data) {
+                        console.log(data)
+                        attachTweet(data, true, true)
+                        updateHashLinks()
+                    },error: function (data) {
+                            console.log("error")
+                        console.log(data)
+                        
+                    }
+                })
+            })
+            )
 
             function updateHashLinks() {
                 $('.media-body').each(function (data) {
@@ -41,14 +60,14 @@
                      tweetFormattedHtml ="<div class=\"media\"><div class=\"media-body\"><span class='grey-color'>Retweet via "
                         +tweetUser.username +" on " + dateDisplay + "</span><br/>" + mainTweet.content + "<br/> via <a href='" +mainTweet.user.url+ "'>"+ mainTweet.user.username +
                         "</a>"+ " | "+ mainTweet.date_display + " | " + "<a href='/tweet/" + tweetValue.id + "'>View</a>" +
-                            " | " + "<a href='/tweet/" + tweetValue.id + "/retweet/'>Retweet</a>"+"</div></div><hr/>"
+                            " | " + "<a class='retweetBtn' href='/tweet/" + tweetValue.id + "/retweet/'>Retweet</a>"+"</div></div><hr/>"
 
                 }
                 else{
                         //fresh tweet
                     tweetFormattedHtml ="<div class=\"media\"><div class=\"media-body\">" + tweetContent +
                     "<br/> via <a href='" +tweetUser.url+ "'>"+ tweetUser.username + "</a>"+
-                    " | "+ dateDisplay + " | " + "<a href='/tweet/" + tweetValue.id + "'>View</a>" +" | "+"<a href='/tweet/"
+                    " | "+ dateDisplay + " | " + "<a href='/tweet/" + tweetValue.id + "'>View</a>" +" | "+"<a class='retweetBtn' href='/tweet/"
                         + tweetValue.id + "/retweet/'>Retweet</a>" +"</div></div><hr/>"
 
                 }
