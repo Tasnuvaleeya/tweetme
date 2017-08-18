@@ -3,8 +3,8 @@ from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
 from .validators import validate_content
-
-
+from django.db.models.signals import post_save
+import re
 class TweetManager(models.Manager):
     def retweet(self, user, parent_obj):
         if parent_obj.parent:
@@ -51,3 +51,32 @@ class Tweet(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+
+
+def tweet_save_receiver(sender, instance, created, *args, **kwargs):
+    if created and not instance.parent:
+
+        # notify a user
+        user_regex = r'@(?P<username>[\w.@+-]+)'
+        username = re.findall(user_regex, instance.content)
+        # send notification to user here
+
+        # if match:
+        # username = match.group("username")
+        # print(username)
+        # print(match)
+
+
+        hash_regex = r'#(?P<hashtag>[\w\d-]+)'
+        hashtags = re.findall(hash_regex, instance.content)
+        # send hashtag signal to user here
+
+        # if hash_match:
+        # print(hash_match)
+        # hashtag = hash_match.group("hashtag")
+        # print(hashtag)
+
+
+
+
+post_save.connect(tweet_save_receiver, sender=Tweet)
