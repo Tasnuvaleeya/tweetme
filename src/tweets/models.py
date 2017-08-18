@@ -5,6 +5,9 @@ from django.urls import reverse
 from .validators import validate_content
 from django.db.models.signals import post_save
 import re
+from hashtags.signals import parsed_hashtags
+
+
 class TweetManager(models.Manager):
     def retweet(self, user, parent_obj):
         if parent_obj.parent:
@@ -69,6 +72,7 @@ def tweet_save_receiver(sender, instance, created, *args, **kwargs):
 
         hash_regex = r'#(?P<hashtag>[\w\d-]+)'
         hashtags = re.findall(hash_regex, instance.content)
+        parsed_hashtags.send(sender=instance.__class__, hashtag_list=hashtags)
         # send hashtag signal to user here
 
         # if hash_match:
