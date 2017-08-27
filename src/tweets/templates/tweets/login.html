@@ -1,0 +1,11 @@
+
+{% load crispy_forms_tags %}
+<form class="form" method="POST" action="{% url 'tweet:create' %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <label for="username">Username</label>
+    <input type="text" class="form-control" name="username" placeholder="Username"/>
+    <label for="password">Password</label>
+    <input type="password" class="form-control" name="password" placeholder="Password"/>
+    <input type="submit" class="btn btn-primary" value="Log in"/>
+</form>

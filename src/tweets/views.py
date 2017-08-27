@@ -66,9 +66,8 @@ class TweetListView(ListView):
         return context
 
 
-
-
-
+# def login_form(request):
+    # return render(request, 'tweets/login.html', {})
 
 
 
