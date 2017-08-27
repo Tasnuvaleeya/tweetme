@@ -12,8 +12,6 @@ class ParentTweetModelSerializer(serializers.ModelSerializer):
     likes = serializers.SerializerMethodField()
     did_like = serializers.SerializerMethodField()
 
-
-
     class Meta:
         model = Tweet
         fields =[
