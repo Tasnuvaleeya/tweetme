@@ -54,8 +54,12 @@ class TweetDetailAPIView(generics.ListAPIView):
 
     def get_queryset(self, *args,**kwargs):
         tweet_id = self.kwargs.get("pk")
-        qs = Tweet.objects.filter(pk =tweet_id)
-        return qs
+        qs1 = Tweet.objects.filter(pk =tweet_id)
+        if qs1.exists() and qs1.count()==1:
+            parent_obj = qs1.first()
+            qs2 = parent_obj.get_children()
+            qs = (qs1 | qs2).distinct().extra(select={"parent_id_null": 'parent_id IS NULL'})
+        return qs.order_by("-parent_id_null", 'timestamp')
 
 class TweetListAPIView(generics.ListAPIView):
     serializer_class = TweetModelSerializer
