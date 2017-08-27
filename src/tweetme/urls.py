@@ -21,12 +21,14 @@ from tweets.views import TweetListView
 from hashtags.views import HashTagView
 from .views import SearchView
 from tweets.api.views import SearchTweetAPIView
+from hashtags.api.views import TagTweetAPIView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TweetListView.as_view(), name='home'),
     url(r'^search/$', SearchView.as_view(), name='search'),
     url(r'^tags/(?P<hashtag>.*)/$', HashTagView.as_view(), name='hashtag'),
     url(r'^tweet/', include('tweets.urls', namespace="tweet")),
+    url(r'^api/tags/(?P<hashtag>.*)/$', TagTweetAPIView.as_view(), name='tag-tweet-api'),
     url(r'^api/search/$', SearchTweetAPIView.as_view(), name='search-api'),
     url(r'^api/tweet/',include('tweets.api.urls', namespace="tweet-api")),
     url(r'^api/',include('accounts.api.urls', namespace="profiles-api")),
