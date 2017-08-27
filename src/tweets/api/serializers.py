@@ -10,7 +10,7 @@ class ParentTweetModelSerializer(serializers.ModelSerializer):
     date_display = serializers.SerializerMethodField()
     timesince = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
-    # did_like = serializers.SerializerMethodField()
+    did_like = serializers.SerializerMethodField()
 
     class Meta:
         model = Tweet
@@ -22,15 +22,19 @@ class ParentTweetModelSerializer(serializers.ModelSerializer):
             'date_display',
             'timesince',
             'likes',
-            # 'did_like',
+            'did_like',
         ]
-    # def get_did_like(self,obj):
-    #     request = self.context.get("request")
-    #     user = request.user
-    #     if user.is_authenticated():
-    #         if user in obj.liked.all():
-    #             return True
-    #     return False
+    def get_did_like(self, obj):
+        # request = self.context.get("request")
+        try:
+            user = request.user
+            if user.is_authenticated():
+                if user in obj.liked.all():
+                    return True
+        except:
+            pass
+        return False
+
 
     def get_likes(self,obj):
         return obj.liked.all().count()
@@ -48,7 +52,7 @@ class TweetModelSerializer(serializers.ModelSerializer):
     timesince = serializers.SerializerMethodField()
     parent = ParentTweetModelSerializer(read_only=True)
     likes = serializers.SerializerMethodField()
-    # did_like = serializers.SerializerMethodField()
+    did_like = serializers.SerializerMethodField()
 
 
     class Meta:
@@ -63,18 +67,21 @@ class TweetModelSerializer(serializers.ModelSerializer):
             'timesince',
             'parent',
             'likes',
-            # 'did_like',
+            'did_like',
             'reply',
         ]
         # read_only_fields=['reply']
 
-    # def get_did_like(self,obj):
-    #     request = self.context.get("request")
-    #     user = request.user
-    #     if user.is_authenticated():
-    #         if user in obj.liked.all():
-    #             return True
-    #     return False
+    def get_did_like(self,obj):
+        request = self.context.get("request")
+        try:
+            user = request.user
+            if user.is_authenticated():
+                if user in obj.liked.all():
+                    return True
+        except:
+            pass
+        return False
 
     def get_likes(self,obj):
         return obj.liked.all().count()

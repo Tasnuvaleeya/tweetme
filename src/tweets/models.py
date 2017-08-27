@@ -9,6 +9,7 @@ from hashtags.signals import parsed_hashtags
 
 
 class TweetManager(models.Manager):
+
     def retweet(self, user, parent_obj):
         if parent_obj.parent:
             og_parent = parent_obj.parent
@@ -20,6 +21,7 @@ class TweetManager(models.Manager):
             timestamp__year=timezone.now().year,
             timestamp__month=timezone.now().month,
             timestamp__day=timezone.now().day,
+            reply = False,
         )
         if qs.exists():
             return None
