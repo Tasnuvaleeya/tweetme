@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 
 User = get_user_model()
 
+
 class UserDisplaySerializer(serializers.ModelSerializer):
     follower_count = serializers.SerializerMethodField()
     url=serializers.SerializerMethodField()

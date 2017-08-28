@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = '=avod-og1&^*t(cotkd!$x!=ksm!!dy*if2usvj#@!+l0z^*f-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -55,6 +55,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'tweetme.urls'
+LOGIN_URL="/login/"
+LOGIN_REDIRECT_URL ="/"
+LOGOUT_REDIRECT_URL=LOGIN_REDIRECT_URL
 
 TEMPLATES = [
     {

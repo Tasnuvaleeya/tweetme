@@ -1,6 +1,7 @@
 
 {% extends 'base.html' %}
 
+{#{% load recommended %}#}
 {% block script %}
 
     <script>
@@ -34,6 +35,9 @@
                 {% empty %}
                 <h4>Not followed by any user</h4>
             {% endfor %}
+        <hr/>
+
+
         </div>
 
         <div class="col-sm-9 col-xs-12">
@@ -44,10 +48,11 @@
             </div>
 
             <a href="#" id="loadmore">Load More Tweets</a>
-            {#            {% for tweet in object.tweet_set.all  %}#}
-            {#                {{ tweet }}<br/><hr/>#}
-            {#            {% endfor %}#}
-            {#            <hr/>#}
+{#                        {% for tweet in object.tweet_set.all  %}#}
+{#                            {{ tweet }}<br/><hr/>#}
+{#                        {% endfor %}#}
+{#                        <hr/>#}
+
 
 
         </div>

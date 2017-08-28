@@ -9,7 +9,6 @@ from tweets.models import Tweet
 from hashtags.models import HashTag
 
 
-
 class TagTweetAPIView(generics.ListAPIView):
     queryset = Tweet.objects.all().order_by("-timestamp")
     serializer_class = TweetModelSerializer
@@ -32,7 +31,7 @@ class TagTweetAPIView(generics.ListAPIView):
             query = self.request.GET.get("q", None)
             if query is not None:
                 qs = qs.filter(
-                            Q(content__icontains=query)|
+                            Q(content__icontains=query) |
                             Q(user__username__icontains=query)
                             )
             return qs

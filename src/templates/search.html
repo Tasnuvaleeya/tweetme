@@ -45,11 +45,10 @@
         <div class="col-sm-3">
             <h1>Users</h1>
             {% for user in users %}
-                <a href="/{{ user.username }}/">{{ user.username }}</a><br/>
+                <a href='/{{ user.username}}/'>{{ user.username}}</a><br/>
 
                 {% empty %}
-                <p>No user Found</p>
-
+                <p>No users found</p>
             {% endfor %}
 
 
